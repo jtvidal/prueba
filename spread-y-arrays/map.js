@@ -39,11 +39,24 @@ people = [
 ];
 //VARIABLES
 let encontradas =[];
+
 //FUNCTIONS
+
+/**
+ * Esta función concatena el atributo occupation y name de cada objeto del array people.
+ * @param person Será el objeto en el array people a analizar 
+ * @returns string, devuelve un string que es la concatenación de los valores de los atributos name y occupation.
+ */
 const nameAndOccupation = (person) => {
   return `${person.occupation} ${person.name}`;
 };
 
+/**
+ * Esta funcion separa los atributos name y occupation del resto, en cada objeto para luego utilizar la funcion nameAndOccupation.
+ * creando un nuevo objeto con el atributo name-occupation que pasara a ser la concatenacion de los dos separados.
+ * @param individual nuevo objeto en un nuevo array modificado antes era person, ahora es individual.
+ * @returns object, devuelve el objeto modificado.
+ */
 const createIndividual = (individual) => {
   //spread
   const { name, occupation, ...rest } = individual;
@@ -53,6 +66,11 @@ const createIndividual = (individual) => {
   };
 };
 
+/**
+ * Esta función verifica si lo que el usuario busca en el input del formulario existe entre los atributos name de cada objeto en el array people.
+ * @param {*} person elemento del tipo objeto en el array analizado.
+ * @returns 
+ */
 const buscarPersonas = (person) =>
   person.name.toLowerCase().includes(inputNombre.value.toLowerCase());
 

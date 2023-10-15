@@ -7,69 +7,80 @@ numeros = [
   1,
 ];
 
-
 people = [
   {
-    "name": "John Doe",
-    "age": 30,
-    "city": "New York",
-    "gender": "Male",
-    "occupation": "Engineer"
+    name: "John Doe",
+    age: 30,
+    city: "New York",
+    gender: "Male",
+    occupation: "Engineer",
   },
   {
-    "name": "Jane Smith",
-    "age": 25,
-    "city": "Los Angeles",
-    "gender": "Female",
-    "occupation": "Teacher"
+    name: "Jane Smith",
+    age: 25,
+    city: "Los Angeles",
+    gender: "Female",
+    occupation: "Teacher",
   },
   {
-    "name": "Michael Johnson",
-    "age": 35,
-    "city": "Chicago",
-    "gender": "Male",
-    "occupation": "Doctor"
+    name: "Michael Johnson",
+    age: 35,
+    city: "Chicago",
+    gender: "Male",
+    occupation: "Doctor",
   },
   {
-    "name": "Emily Davis",
-    "age": 28,
-    "city": "San Francisco",
-    "gender": "Female",
-    "occupation": "Designer"
-  }
-]
-//dom
-const inputNombre = document.getElementById('nombre');
-console.log(inputNombre);
+    name: "Emily Davis",
+    age: 28,
+    city: "San Francisco",
+    gender: "Female",
+    occupation: "Designer",
+  },
+];
+//VARIABLES
 
-const divNombres = document.querySelector('.nombres');
-console.log(divNombres);
-
-//SPREAD
-//functions
+//FUNCTIONS
 const nameAndOccupation = (person) => {
   return `${person.occupation} ${person.name}`;
-}
-const createIndividual = (individual) =>{
-  const{name,occupation,...rest} = individual;
-  return{
-    'name-occupation': nameAndOccupation(individual),
-    rest
-  }
-}
+};
+
+const createIndividual = (individual) => {
+  //spread
+  const { name, occupation, ...rest } = individual;
+  return {
+    "name-occupation": nameAndOccupation(individual),
+    rest,
+  };
+};
+
+const buscarPersonas = (person) =>
+  person.name.toLowerCase().includes(inputNombre.value.toLowerCase());
+
+//DOM
+const formulario = document.querySelector("form");
+console.log(formulario);
+formulario.addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const encontradas = people.filter(buscarPersonas);
+  console.log("Personas encontradas:", encontradas);
+});
+
+const inputNombre = document.getElementById("nombre");
+console.log(inputNombre);
+const divNombres = document.querySelector(".nombres");
+console.log(divNombres);
 
 //MAP
 const newPeople = people.map(createIndividual);
-console.log('Nuevo Array:',newPeople);
+console.log("Nuevo Array:", newPeople);
 
 //REDUCE
-const totalEdades = people.reduce((acumulador,person)=>{return acumulador+ person.age},0);
-console.log('Suma de edades:',totalEdades);
+const totalEdades = people.reduce((acumulador, person) => {
+  return acumulador + person.age;
+}, 0);
+console.log("Suma de edades:", totalEdades);
 
 //FILTER
-//functions
-const mayores = people.filter((person) => person.age>=30)
-console.log('filtrados por edad',mayores);
 
-const busquedaNombre = people.filter((person))
-
+const mayores = people.filter((person) => person.age >= 30);
+console.log("filtrados por edad", mayores);

@@ -147,13 +147,21 @@ const petsPromise = new Promise((done) => {
   }, 2000);
 });
 
-const itsVaccinated = (pet)=>{
-  if(pet.vaccinated){
+const itsVaccinated = (pet) => {
+  if (pet.vaccinated) {
     return pet;
   }
-}
+};
+const notVaccinated = (pet) => {
+  if (!pet.vaccinated) {
+    return pet;
+  }
+};
 petsPromise
-// .then((petList) => console.log('Array de todas las mascotas',petList))
-.then(petList => petList.filter(itsVaccinated))
-.then(result => console.log(result));
+  .then((petList) => petList.filter(itsVaccinated))
+  .then((result) => console.log(result))
+  .then(petsPromise
+    .then((petList) => petList.filter(notVaccinated))
+    .then((result) => console.log(result))
+  );
 

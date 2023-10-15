@@ -13,38 +13,39 @@ people = [
     age: 30,
     city: "New York",
     gender: "Male",
-    occupation: "Engineer",
+    occupation: "Engineer"
   },
   {
     name: "Jane Smith",
     age: 25,
     city: "Los Angeles",
     gender: "Female",
-    occupation: "Teacher",
+    occupation: "Teacher"
   },
   {
     name: "Michael Johnson",
     age: 35,
     city: "Chicago",
     gender: "Male",
-    occupation: "Doctor",
+    occupation: "Doctor"
   },
   {
     name: "Emily Davis",
     age: 28,
     city: "San Francisco",
     gender: "Female",
-    occupation: "Designer",
-  },
+    occupation: "Designer"
+  }
 ];
 //VARIABLES
-let encontradas =[];
+let encontradas = [];
+let template;
 
 //FUNCTIONS
 
 /**
  * Esta función concatena el atributo occupation y name de cada objeto del array people.
- * @param person Será el objeto en el array people a analizar 
+ * @param person Será el objeto en el array people a analizar
  * @returns string, devuelve un string que es la concatenación de los valores de los atributos name y occupation.
  */
 const nameAndOccupation = (person) => {
@@ -69,22 +70,43 @@ const createIndividual = (individual) => {
 /**
  * Esta función verifica si lo que el usuario busca en el input del formulario existe entre los atributos name de cada objeto en el array people.
  * @param {*} person elemento del tipo objeto en el array analizado.
- * @returns 
+ * @returns
  */
 const buscarPersonas = (person) =>
   person.name.toLowerCase().includes(inputNombre.value.toLowerCase());
 
+/**
+ * Esta función genera un template para ser incrustado en HTML
+ * @param {*} person objeto que provee datos para las etiquetas del template
+ * @return template Devuelve un template con los valores de los atributos del objeto parámetro
+ */
+const crearCard = (person) => {
+  const template = `<div>
+    <p>Nombre: ${person.name}</p>
+    <p>Ocupación: ${person.occupation}</p>
+    <p>Edad: ${person.age}</p>
+    <p>Género: ${person.gender}</p>
+    <p>Ciudad: ${person.city}</p>
+  </div>
+  `;
+  return template;
+};
+
 //DOM
+//formulario
 const formulario = document.querySelector("form");
 console.log(formulario);
 formulario.addEventListener("submit", (ev) => {
   ev.preventDefault();
   encontradas = people.filter(buscarPersonas);
+  divNombres.innerHTML = encontradas.map((person) => crearCard(person)).join('');
   console.log("Personas encontradas:", encontradas);
 });
 
+//input
 const inputNombre = document.getElementById("nombre");
 console.log(inputNombre);
+//div
 const divNombres = document.querySelector(".nombres");
 console.log(divNombres);
 

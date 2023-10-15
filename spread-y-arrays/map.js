@@ -38,7 +38,7 @@ people = [
   },
 ];
 //VARIABLES
-
+let encontradas =[];
 //FUNCTIONS
 const nameAndOccupation = (person) => {
   return `${person.occupation} ${person.name}`;
@@ -61,7 +61,7 @@ const formulario = document.querySelector("form");
 console.log(formulario);
 formulario.addEventListener("submit", (ev) => {
   ev.preventDefault();
-  const encontradas = people.filter(buscarPersonas);
+  encontradas = people.filter(buscarPersonas);
   console.log("Personas encontradas:", encontradas);
 });
 
@@ -81,6 +81,5 @@ const totalEdades = people.reduce((acumulador, person) => {
 console.log("Suma de edades:", totalEdades);
 
 //FILTER
-
 const mayores = people.filter((person) => person.age >= 30);
 console.log("filtrados por edad", mayores);

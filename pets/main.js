@@ -141,10 +141,19 @@ pets = [
   },
 ];
 
-const petsPromise = new Promise((resolve) => {
+const petsPromise = new Promise((done) => {
   setTimeout(() => {
-    resolve(pets);
+    done(pets);
   }, 2000);
 });
 
-petsPromise.then((petList) => console.log('Array de todas las mascotas',petList))
+const itsVaccinated = (pet)=>{
+  if(pet.vaccinated){
+    return pet;
+  }
+}
+petsPromise
+// .then((petList) => console.log('Array de todas las mascotas',petList))
+.then(petList => petList.filter(itsVaccinated))
+.then(result => console.log(result));
+

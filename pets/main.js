@@ -141,16 +141,32 @@ pets = [
     vaccinated: false,
   },
 ];
-let myPets = [];
+//VARIABLES Y DOM
+let myVaccinatedPets = [];
+let myNotVaccinatedPets = [];
+const clearLocal = document.querySelector('.localClear');
+clearLocal.addEventListener('click',(ev)=>{clearLocalStorage()});
 //FUNCTIONS
-const localSave = (el) => {
-  if (!localStorage.data) {
+const clearLocalStorage = () =>{
+  localStorage.clear();
+}
+const localVaccinated = (el) => {
+  if (!localStorage.vaccinated) {
     console.log('creo array myPets');
   } else {
-    myPets = JSON.parse(localStorage.getItem("data"));
+    myVaccinatedPets = JSON.parse(localStorage.getItem("vaccinated"));
   }
-  myPets.push(el);
-  localStorage.setItem("data", JSON.stringify(myPets));
+  myVaccinatedPets.push(el);
+  localStorage.setItem("vaccinated", JSON.stringify(myVaccinatedPets));
+};
+const localNotVaccinated = (el) => {
+  if (!localStorage.notVaccinated) {
+    console.log('creo array myPets');
+  } else {
+    myNotVaccinatedPets = JSON.parse(localStorage.getItem("notVaccinated"));
+  }
+  myNotVaccinatedPets.push(el);
+  localStorage.setItem("notVaccinated", JSON.stringify(myNotVaccinatedPets));
 };
 
 const itsVaccinated = (pet) => {
@@ -182,8 +198,10 @@ const petsPromise = new Promise((done) => {
     done(pets);
   }, 2000);
 });
-
 //PROGRAM
 petsPromise
   .then((petList) => petList.filter(itsVaccinated))
-  .then(petsPromise.then((petList) => petList.filter(notVaccinated)));
+     .then(result => localVaccinated(result)) 
+  .then(petsPromise
+      .then((petList) => petList.filter(notVaccinated))
+         .then(result => localNotVaccinated(result)));

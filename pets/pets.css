@@ -1,0 +1,8 @@
+.vaccinated{
+    border: green solid 3px;
+    border-radius: 1rem;
+}
+.notVaccinated{
+    border: red solid 3px;
+    border-radius: 1rem;
+}

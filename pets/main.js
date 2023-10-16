@@ -141,8 +141,18 @@ pets = [
     vaccinated: false,
   },
 ];
-
+let myPets = [];
 //FUNCTIONS
+const localSave = (el) => {
+  if (!localStorage.data) {
+    console.log('creo array myPets');
+  } else {
+    myPets = JSON.parse(localStorage.getItem("data"));
+  }
+  myPets.push(el);
+  localStorage.setItem("data", JSON.stringify(myPets));
+};
+
 const itsVaccinated = (pet) => {
   if (pet.vaccinated) {
     return pet;
@@ -153,9 +163,8 @@ const notVaccinated = (pet) => {
     return pet;
   }
 };
-const petCard = (pet)=>{
-  const template = 
-  `
+const petCard = (pet) => {
+  const template = `
   <div>
     <p>Name: ${pet.name}</p>
     <p>Name: ${pet.age}</p>
@@ -163,10 +172,10 @@ const petCard = (pet)=>{
     <p>Name: ${pet.color}</p>
     <p>Name: ${pet.vaccinated}</p>
   </div>
-  `
+  `;
   return template;
-}
-console.log(petCard(pets[0]));
+};
+
 //PROMISE
 const petsPromise = new Promise((done) => {
   setTimeout(() => {
@@ -174,13 +183,7 @@ const petsPromise = new Promise((done) => {
   }, 2000);
 });
 
-
 //PROGRAM
 petsPromise
   .then((petList) => petList.filter(itsVaccinated))
-  .then((result) => console.log(result))
-  .then(petsPromise
-    .then((petList) => petList.filter(notVaccinated))
-    .then((result) => console.log(result))
-  );
-
+  .then(petsPromise.then((petList) => petList.filter(notVaccinated)));

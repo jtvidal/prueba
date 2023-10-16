@@ -1,3 +1,4 @@
+//DATA
 pets = [
   {
     name: "Buddy",
@@ -141,12 +142,7 @@ pets = [
   },
 ];
 
-const petsPromise = new Promise((done) => {
-  setTimeout(() => {
-    done(pets);
-  }, 2000);
-});
-
+//FUNCTIONS
 const itsVaccinated = (pet) => {
   if (pet.vaccinated) {
     return pet;
@@ -157,6 +153,29 @@ const notVaccinated = (pet) => {
     return pet;
   }
 };
+const petCard = (pet)=>{
+  const template = 
+  `
+  <div>
+    <p>Name: ${pet.name}</p>
+    <p>Name: ${pet.age}</p>
+    <p>Name: ${pet.species}</p>
+    <p>Name: ${pet.color}</p>
+    <p>Name: ${pet.vaccinated}</p>
+  </div>
+  `
+  return template;
+}
+console.log(petCard(pets[0]));
+//PROMISE
+const petsPromise = new Promise((done) => {
+  setTimeout(() => {
+    done(pets);
+  }, 2000);
+});
+
+
+//PROGRAM
 petsPromise
   .then((petList) => petList.filter(itsVaccinated))
   .then((result) => console.log(result))

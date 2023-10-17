@@ -144,29 +144,30 @@ pets = [
 //VARIABLES Y DOM
 let myVaccinatedPets = [];
 let myNotVaccinatedPets = [];
-const clearLocal = document.querySelector('.localClear');
-clearLocal.addEventListener('click',(ev)=>{clearLocalStorage()});
+const clearLocal = document.querySelector(".localClear");
+clearLocal.addEventListener("click", (ev) => {
+  clearLocalStorage();
+});
+
 //FUNCTIONS
-const clearLocalStorage = () =>{
+const clearLocalStorage = () => {
   localStorage.clear();
-}
-const localVaccinated = (el) => {
-  if (!localStorage.vaccinated) {
-    console.log('creo array myPets');
-  } else {
-    myVaccinatedPets = JSON.parse(localStorage.getItem("vaccinated"));
-  }
-  myVaccinatedPets.push(el);
-  localStorage.setItem("vaccinated", JSON.stringify(myVaccinatedPets));
 };
-const localNotVaccinated = (el) => {
-  if (!localStorage.notVaccinated) {
-    console.log('creo array myPets');
+
+/**
+ * localSave guarda en localStorage las mascotas vacunadas y las no vacunadas.
+ * @param {*} el Elemento guardado, un array que proviene de la promesa
+ * @param {*} array Array que sera actualizado cada vez que se guarda el elemento
+ * @param {*} info key del espacio de localStorage
+ */
+const localSave = (el, array, info) => {
+  if (!localStorage.info) {
+    console.log("creo array myPets");
   } else {
-    myNotVaccinatedPets = JSON.parse(localStorage.getItem("notVaccinated"));
+    array = JSON.parse(localStorage.getItem(info));
   }
-  myNotVaccinatedPets.push(el);
-  localStorage.setItem("notVaccinated", JSON.stringify(myNotVaccinatedPets));
+  array.push(el);
+  localStorage.setItem(info, JSON.stringify(array));
 };
 
 const itsVaccinated = (pet) => {
@@ -199,9 +200,15 @@ const petsPromise = new Promise((done) => {
   }, 2000);
 });
 //PROGRAM
-petsPromise
-  .then((petList) => petList.filter(itsVaccinated))
-     .then(result => localVaccinated(result)) 
-  .then(petsPromise
-      .then((petList) => petList.filter(notVaccinated))
-         .then(result => localNotVaccinated(result)));
+if (myNotVaccinatedPets.length == 0 && myVaccinatedPets == 0) {
+  petsPromise
+    .then((petList) => petList.filter(itsVaccinated))
+    .then((result) => localSave(result, myVaccinatedPets, "vaccinated"))
+    .then(
+      petsPromise
+        .then((petList) => petList.filter(notVaccinated))
+        .then((result) =>
+          localSave(result, myNotVaccinatedPets, "not vaccinated")
+        )
+    );
+}
